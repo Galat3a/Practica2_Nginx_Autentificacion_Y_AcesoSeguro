@@ -309,9 +309,9 @@ Captura del intento de acceser a la web con credenciales no autorizadas:
 
 Capturas de los sucesos y registros en los logs access.log y error.log:
 error.log
-<img src="capturas/7.png"/>
+<img src="capturas/7_error.png"/>
 access.log
-<img src="capturas/8.png"/>
+<img src="capturas/8_validos.png"/>
 
 
 ## Tarea 2.2. - Acceso restringido a la sección Contact
@@ -332,8 +332,8 @@ server {
 }
 
 ```
-<img src="capturas/9.png"/>
-<img src="capturas/10.png"/>
+<img src="capturas/9_contact.png"/>
+<img src="capturas/10_contact.png"/>
 
 
 ## Tarea 3.2. - Doble autenticación, IP y usuario
@@ -355,7 +355,7 @@ server {
         try_files $uri $uri/ =404;
     }
 }
-<img src="capturas/12.png"/>
+<img src="capturas/12_permisoDenegado.png"/>
 
 En esta parte no puedo añadir captura ya que me era imposible dar con la ip correcta que debo de poner en el location, intenté varias opciones pero todas me dejaban entrar sin problema a privado.html
 
