@@ -294,24 +294,24 @@ Captura de la creacion de contraseñas a traves del comando
 sudo sh -c "openssl passwd -apr1 >> /etc/nginx/.htpasswd"
 
 ```
-<img src="img/1.png"/>
+<img src="capturas/1.png"/>
 
 ## Tarea 2.1. - Ficheros error.log y access.log
 
 Captura del intento de acceder a la web, donde pide autentificación, la introduzco correctamente y entro:
 
-<img src="img/2.png"/>
-<img src="img/3.png"/>
-<img src="img/4.png"/>
+<img src="capturas/2.png"/>
+<img src="capturas/3.png"/>
+<img src="capturas/4.png"/>
 
 Captura del intento de acceser a la web con credenciales no autorizadas:
-<img src="img/6.png"/>
+<img src="capturas/6.png"/>
 
 Capturas de los sucesos y registros en los logs access.log y error.log:
 error.log
-<img src="img/7.png"/>
+<img src="capturas/7.png"/>
 access.log
-<img src="img/8.png"/>
+<img src="capturas/8.png"/>
 
 
 ## Tarea 2.2. - Acceso restringido a la sección Contact
@@ -332,8 +332,8 @@ server {
 }
 
 ```
-<img src="img/9.png"/>
-<img src="img/10.png"/>
+<img src="capturas/9.png"/>
+<img src="capturas/10.png"/>
 
 
 ## Tarea 3.2. - Doble autenticación, IP y usuario
@@ -355,7 +355,7 @@ server {
         try_files $uri $uri/ =404;
     }
 }
-<img src="img/12.png"/>
+<img src="capturas/12.png"/>
 
 En esta parte no puedo añadir captura ya que me era imposible dar con la ip correcta que debo de poner en el location, intenté varias opciones pero todas me dejaban entrar sin problema a privado.html
 
