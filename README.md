@@ -341,7 +341,7 @@ server {
 Se configura Nginx para que, desde la máquina anfitriona, se requiera tanto una IP válida como un usuario autorizado para poder acceder.
 
 Para ello, se modifica el bloque de servidor (server block) de la siguiente manera, incorporando las restricciones de IP y autenticación de usuario al mismo tiempo:
-
+```bash
 server {
     listen 80;
     listen [::]:80;
@@ -355,6 +355,7 @@ server {
         try_files $uri $uri/ =404;
     }
 }
+```
 <img src="capturas/12_permisoDenegado.png"/>
 
 En esta parte no puedo añadir captura ya que me era imposible dar con la ip correcta que debo de poner en el location, intenté varias opciones pero todas me dejaban entrar sin problema a privado.html
@@ -367,3 +368,116 @@ Adjunto en el proyecto, 5 tipos de archivos llamados paramore que serían los qu
 
 En este repositorio el proyecto cuenta con pocos commit debido a que en el ultimo momento no me hacian los push correctamente, por lo que he tenido que crear uno de nuevo con todo el contenido del repositorio anterior. 
 
+## Configuración de Acceso Seguro
+
+### 1. Creación del Directorio y Copia del Sitio Web
+Primero, se crea el directorio donde se alojará el sitio web example.com, y luego se copia el contenido del sitio desde la carpeta F
+sudo mkdir -p /var/www/example.com/html
+```bash
+sudo mkdir -p /var/www/example.com/html
+sudo cp -r /home/vagrant/ftp/example/* /var/www/example.com/html
+```
+Luego, se crea el archivo de configuración para example.com:
+```bash
+sudo nano /etc/nginx/sites-available/example.com
+```
+En este archivo, se define el directorio raíz y el nombre del servidor para el sitio example.com:
+```bash
+server {
+    listen 80;
+    listen [::]:80;
+    root /var/www/example/html;
+    index index.html index.htm index.nginx-debian.html;
+    server_name example.com www.example.com;
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+A continuación, se comprueba que no haya errores de sintaxis en la configuración de Nginx:
+```bash
+sudo nginx -t
+```
+Y luego se recarga el servicio de Nginx para aplicar los cambios:
+```bash
+sudo systemctl reload nginx
+```
+
+### 2. Configuración del Cortafuegos (UFW)
+Para gestionar el cortafuegos, se utilizará UFW (Uncomplicated Firewall). Primero, instalamos UFW si no está instalado:
+```bash
+sudo ufw enable
+sudo ufw status verbose
+sudo ufw allow 'Nginx Full'
+sudo ufw allow 'Nginx HTTP'
+```
+verificamos las reglas de UFW con:
+```bash
+sudo ufw status
+
+```
+
+Y el resultado obtenido es:
+```bash
+Status: active
+
+To                         Action      From
+--                         ------      ----
+Nginx Full                 ALLOW       Anywhere
+Nginx Full (v6)            ALLOW       Anywhere (v6)
+
+```
+Reiniciamos Nginx
+```bash
+sudo ufw reload
+```
+<img src="capturas/01.png"/>
+### 3. Generación de un Certificado SSL Autofirmado
+Para habilitar HTTPS en el servidor, se genera un certificado SSL autofirmado utilizando el siguiente comando de OpenSSL:
+```bash
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/example.com.key -out /etc/ssl/certs/example.com.crt
+```
+<img src="capturas/02.png"/>
+
+### 4. Configuración del Servidor Web con SSL
+A continuación, se debe modificar el archivo de configuración de Nginx para habilitar HTTPS, utilizando el certificado SSL recién creado. Se edita el archivo /etc/nginx/sites-available/example.com y se realiza la configuración:
+```bash
+server {
+    listen 80;
+    listen 443 ssl;
+    root /var/www/example/html/example;
+    index index.html index.htm index.nginx-debian.html;
+    server_name example.com www.example.com;
+    ssl_certificate /etc/ssl/certs/example.com.crt;
+    ssl_certificate_key /etc/ssl/private/example.com.key;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+<img src="capturas/03.png"/>
+```
+Con la configuración en su lugar, se comprueba la validez de la configuración de Nginx:
+```bash
+sudo nginx -t
+```
+Luego, se recarga Nginx para que los cambios surtan efecto:
+```bash
+sudo systemctl reload nginx
+```
+
+### 5. Comprobación de la Configuración
+Para comprobar que el sitio web esté accesible, se debe modificar el archivo hosts de la máquina local para asociar la dirección IP de la máquina virtual con el dominio example.com.
+
+En sistemas Windows, el archivo hosts se encuentra en:
+```bash
+C:\Windows\System32\drivers\etc\hosts
+```
+Se edita el archivo y se agrega la siguiente línea, donde 192.168.1.9 es la dirección IP de la máquina virtual:
+```bash
+192.168.1.9 example.com
+```
+<img src="capturas/04.png"/>
