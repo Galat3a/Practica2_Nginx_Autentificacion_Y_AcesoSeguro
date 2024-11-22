@@ -237,12 +237,12 @@ Sin los permisos adecuados, Nginx no podrá leer o acceder a los archivos necesa
 # Autentificación
 
 
-## 1. Comprobación de OpenSSL: Primero, verificamos que el paquete de herramientas de OpenSSL esté instalado en el sistema. Para ello, usamos el siguiente comando:
+### 1. Comprobación de OpenSSL: Primero, verificamos que el paquete de herramientas de OpenSSL esté instalado en el sistema. Para ello, usamos el siguiente comando:
 ```bash
    dpkg -l | grep openssl
 
 ```
-## 2.Creación del archivo .htpasswd: A continuación, creamos el archivo .htpasswd en la ruta /etc/nginx para almacenar los usuarios y contraseñas. Primero, añadimos el nombre de usuario:
+### 2.Creación del archivo .htpasswd: A continuación, creamos el archivo .htpasswd en la ruta /etc/nginx para almacenar los usuarios y contraseñas. Primero, añadimos el nombre de usuario:
 
 ```bash
    sudo sh -c "echo -n 'nombre:' >> /etc/nginx/.htpasswd"
@@ -259,7 +259,7 @@ podemos verificar que el archivo .htpasswd se ha creado correctamente con el sig
    cat /etc/nginx/.htpasswd
 
 ```
-##  3. Configuración del bloque del servidor en Nginx: Ahora, editamos el archivo de configuración del sitio web en Nginx para aplicar las restricciones de autenticación. Para ello, abrimos el archivo correspondiente:
+###  3. Configuración del bloque del servidor en Nginx: Ahora, editamos el archivo de configuración del sitio web en Nginx para aplicar las restricciones de autenticación. Para ello, abrimos el archivo correspondiente:
 ```bash
 sudo nano /etc/nginx/sites-available/paramore
 
@@ -284,7 +284,7 @@ server {
 
 ```
 
-## 4. Reinicio del servicio Nginx: Para aplicar los cambios realizados en la configuración, reiniciamos el servicio Nginx con el siguiente comando:
+### 4. Reinicio del servicio Nginx: Para aplicar los cambios realizados en la configuración, reiniciamos el servicio Nginx con el siguiente comando:
 ```bash
 sudo systemctl restart nginx
 
@@ -359,7 +359,7 @@ server {
 
 En esta parte no puedo añadir captura ya que me era imposible dar con la ip correcta que debo de poner en el location, intenté varias opciones pero todas me dejaban entrar sin problema a privado.html
 
-## Documentos paramore.
+### Documentos paramore.
 
 Adjunto en el proyecto, 5 tipos de archivos llamados paramore que serían los que se van cambiando en sudo nano /etc/nginx/sites-available/paramore para realizar las distintas tareas de la practica
 
