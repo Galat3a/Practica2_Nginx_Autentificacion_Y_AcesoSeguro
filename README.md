@@ -458,8 +458,9 @@ server {
     }
 }
 
-<img src="capturas/03.png"/>
+
 ```
+<img src="capturas/03.png"/>
 Con la configuración en su lugar, se comprueba la validez de la configuración de Nginx:
 ```bash
 sudo nginx -t
