@@ -234,9 +234,8 @@ Sin los permisos adecuados, Nginx no podrá leer o acceder a los archivos necesa
 
 
 
-
-
 # Autentificación
+
 
 ## 1. Comprobación de OpenSSL: Primero, verificamos que el paquete de herramientas de OpenSSL esté instalado en el sistema. Para ello, usamos el siguiente comando:
 ```bash
@@ -363,4 +362,8 @@ En esta parte no puedo añadir captura ya que me era imposible dar con la ip cor
 ## Documentos paramore.
 
 Adjunto en el proyecto, 5 tipos de archivos llamados paramore que serían los que se van cambiando en sudo nano /etc/nginx/sites-available/paramore para realizar las distintas tareas de la practica
+
+## NOTA IMPORTANTE
+
+En este repositorio el proyecto cuenta con pocos commit debido a que en el ultimo momento no me hacian los push correctamente, por lo que he tenido que crear uno de nuevo con todo el contenido del repositorio anterior. 
 
