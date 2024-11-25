@@ -45,4 +45,20 @@ Vagrant.configure("2") do |config|
     ln -s /etc/nginx/sites-available/paramoreweb /etc/nginx/sites-enabled/
     systemctl restart nginx
   SHELL
+    config.vm.provision "shell", name: "example", run: "never", inline: <<-SHELL
+    rm /etc/nginx/sites-enabled/*
+    mkdir -p /var/www/example.com/html
+    cp -r /home/vagrant/ftp/example/* /var/www/example.com/html
+    chown -R www-data:www-data /var/www/example.com/html
+    chmod -R 755 /var/www/example.com
+    cp -v /vagrant/example.com /etc/nginx/sites-available/
+    ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+    systemctl restart nginx
+    apt install ufw
+    ufw allow ssh
+    ufw allow 'Nginx Full'
+    ufw delete allow 'Nginx HTTP'
+    ufw --force enable
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/example.com.key -out /etc/ssl/certs/example.com.crt -subj "/C=ES/ST=Andalucía/L=Granada/O=IZV/OU=Despliegue/CN=example.com/emailAddress=webmaster@example.com"
+  SHELL
 end
