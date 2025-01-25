@@ -1,9 +1,9 @@
-# Servidor Web con Nginx
-
-Este repositorio contiene una práctica para la instalación y configuración de un servidor web Nginx en Debian. Además, se incluye la configuración para conectar mediante FTPES y realizar transferencias seguras de archivos al servidor.
+# Tomcat y Maven
 
 
-## 1. Instalación del Servidor Web Nginx
+
+## 1. Instalación de Tomcat
+ Instalar OpenJDK
 
 1. Actualizar los repositorios e instalar Nginx:
 ```bash
